@@ -61,7 +61,9 @@ function populateLeaderboard(lb) {
                     sortedAns +
                     "</td><td>" +
                     numSolved +
-                    "/9</td></tr>"
+                    "/" +
+                    sortedAns.length +
+                    "</td></tr>"
             );
             if (team == myteam) {
                 $(".in-team").append(
@@ -76,7 +78,9 @@ function populateLeaderboard(lb) {
                     sortedAns +
                     "</td><td>" +
                     numSolved +
-                    "/9</td></tr>"
+                    "/" +
+                    sortedAns.length +
+                    "</td></tr>"
             );
             if (team == myteam) {
                 $(".in-team").append(
@@ -91,7 +95,9 @@ function populateLeaderboard(lb) {
                     sortedAns +
                     "</td><td>" +
                     numSolved +
-                    "/9</td></tr>"
+                    "/" +
+                    sortedAns.length +
+                    "</td></tr>"
             );
             if (team == myteam) {
                 $(".in-team").append(
@@ -108,7 +114,9 @@ function populateLeaderboard(lb) {
                     sortedAns +
                     "</td><td>" +
                     numSolved +
-                    "/9</td></tr>"
+                    "/" +
+                    sortedAns.length +
+                    "</td></tr>"
             );
             if (team == myteam) {
                 $(".in-team").append(
