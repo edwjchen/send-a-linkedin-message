@@ -4315,9 +4315,22 @@ body.is-touch #banner {
 }
 
 .question {
+  font-size: 1em;
   margin-bottom: 10px;
 }
 
 .questions {
   color: rgba(255, 255, 255, 0.5);
+}
+
+#team {
+  visibility: visible;
+}
+
+#game {
+  visibility: hidden;
+}
+
+#team-header {
+  color: rgb(255, 213, 0);
 }
