@@ -1,0 +1,23 @@
+{
+  "name": "send-a-linkedin-message",
+  "version": "1.0.0",
+  "description": "Inspired by [Send a Damned Message](https://github.com/WuTheFWasThat/send-a-damned-message)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwjchen/send-a-linkedin-message.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edwjchen/send-a-linkedin-message/issues"
+  },
+  "homepage": "https://github.com/edwjchen/send-a-linkedin-message#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
