@@ -15,6 +15,9 @@
  * Bob:
  * Not quite... but anyways, do you remember what the two
  * modes were?
+ * 
+ * IV: 
+ * 0000000000000000
  *
  * Alice:
  * Yep! Elephant corn branches and cookie bread cream. You know me,
@@ -36,7 +39,3 @@
  * Ok ok, I won't ask you any more. Thanks again for teaching me all those weird
  * organizations today!
  */
-
-// aes-128-cbc, IV: 0000000000000000
-// key length 16... may need to keep repeating the flag
-// flag: data flows like water from offline to online. what city am I in?

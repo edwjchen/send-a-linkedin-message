@@ -326,6 +326,23 @@ function ctf(ans) {
     }
 }
 
+function pymk(ans) {
+    res = [];
+    words = ans.split(" ");
+    for (var i = 0; i < words.length; i++) {
+        if (i == 0) {
+            res.push(words[i] == "ryan" ? "a" : "ceo");
+        } else if (i == 1) {
+            res.push(words[i] == "raghu" ? "linked[in]" : "cto");
+        } else if (i == 2) {
+            res.push(words[i] == "mohak" ? "message" : "svp-eng");
+        } else {
+            res.push("who?");
+        }
+    }
+    return res.join(" ");
+}
+
 app.post("/send", function (req, res) {
     let team = req.body.team.toLowerCase().trim();
     let ans = req.body.ans;
@@ -487,6 +504,20 @@ app.post("/ctf", function (req, res) {
 
     if (check(message)) {
         updateScore(team, "ctf");
+    }
+
+    res.status(200).send({
+        message: message,
+    });
+});
+
+app.post("/pymk", function (req, res) {
+    let team = req.body.team.toLowerCase();
+    let ans = req.body.ans;
+    let message = pymk(ans);
+
+    if (check(message)) {
+        updateScore(team, "pymk");
     }
 
     res.status(200).send({
