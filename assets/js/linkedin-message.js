@@ -86,7 +86,7 @@ $(function () {
     $("#ans").keyup(function (e) {
         if (e.keyCode === 13) {
             let question = $(".selected").text().trim();
-            let ans = $("#ans").val().trim();
+            let ans = $("#ans").val();
             requestAns(ans, question, getTeam());
         }
     });

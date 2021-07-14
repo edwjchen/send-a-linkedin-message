@@ -38,8 +38,6 @@ function getLeaderboard() {
 function populateLeaderboard(lb) {
     myteam = sessionStorage.getItem("team");
 
-    lb = new Map([...lb.entries()].sort((a, b) => a[1].size > b[1].size));
-
     let count = 0;
     let rank = count + 1;
 

@@ -1,6 +1,7 @@
 var http = require("http"),
     express = require("express"),
     path = require("path"),
+    crypto = require("crypto"),
     port = process.env.PORT || 3000;
 
 var app = express();
@@ -18,6 +19,7 @@ app.get("/leaderboard", function (req, res) {
 });
 
 let leaderboard = new Map();
+let answerTime = new Map();
 
 app.get("/getLeaderboard", function (req, res) {
     res.status(200).send({
@@ -51,8 +53,46 @@ function check(ans) {
 function updateScore(team, question) {
     if (!leaderboard.has(team)) {
         leaderboard.set(team, new Set());
+        answerTime.set(team, Date.now());
+    }
+
+    if (!leaderboard.get(team).has(question)) {
+        answerTime.set(team, Date.now());
     }
     leaderboard.get(team).add(question);
+
+    updateLeaderboard();
+}
+
+function updateLeaderboard() {
+    teams = [];
+    for (let [key, value] of leaderboard) {
+        if (!answerTime.has(key)) answerTime.set(key, 0);
+        teams.push([
+            key,
+            value.size,
+            answerTime.get(key),
+            Array.from(leaderboard.get(key)),
+        ]);
+    }
+
+    teams.sort(function (a, b) {
+        if (a[2] == b[2]) return 0;
+        return a[2] < b[2] ? -1 : 1;
+    });
+
+    teams.sort(function (a, b) {
+        if (a[1] == b[1]) return 0;
+        return a[1] > b[1] ? -1 : 1;
+    });
+
+    let lb = new Map();
+
+    for (let [team, _a, _b, _c] of teams) {
+        lb.set(team, leaderboard.get(team));
+    }
+
+    leaderboard = lb;
 }
 
 function send(ans) {
@@ -247,6 +287,45 @@ function gobblin(ans) {
     return res.join(" ");
 }
 
+function numa(ans) {
+    res = [];
+
+    chars = ans.split("");
+
+    for (var i = 0; i < chars.length; i += 2) {
+        if (i + 1 < chars.length) {
+            res.push(chars[i + 1]);
+        }
+
+        res.push(chars[i]);
+    }
+
+    return res.join("");
+}
+
+function ctf(ans) {
+    const algorithm = "aes-128-cbc";
+    const password = "veniceveniceveni";
+
+    try {
+        var decipher = crypto.createDecipheriv(
+            algorithm,
+            password,
+            "0000000000000000"
+        );
+        var plain =
+            decipher.update(ans, "base64", "utf8") + decipher.final("utf8");
+
+        if (plain != "a linked[in] message") {
+            return "answer is encrypted... maybe I need to search somewhere else";
+        }
+
+        return plain;
+    } catch (e) {
+        return "answer is encrypted... maybe I need to search somewhere else";
+    }
+}
+
 app.post("/send", function (req, res) {
     let team = req.body.team.toLowerCase().trim();
     let ans = req.body.ans;
@@ -380,6 +459,34 @@ app.post("/gobblin", function (req, res) {
 
     if (check(message)) {
         updateScore(team, "gobblin");
+    }
+
+    res.status(200).send({
+        message: message,
+    });
+});
+
+app.post("/numa", function (req, res) {
+    let team = req.body.team.toLowerCase();
+    let ans = req.body.ans;
+    let message = numa(ans);
+
+    if (check(message)) {
+        updateScore(team, "numa");
+    }
+
+    res.status(200).send({
+        message: message,
+    });
+});
+
+app.post("/ctf", function (req, res) {
+    let team = req.body.team.toLowerCase();
+    let ans = req.body.ans;
+    let message = ctf(ans);
+
+    if (check(message)) {
+        updateScore(team, "ctf");
     }
 
     res.status(200).send({
